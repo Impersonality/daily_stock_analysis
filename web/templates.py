@@ -44,7 +44,7 @@ body {
     color: var(--text);
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     min-height: 100vh;
     margin: 0;
     padding: 20px;
@@ -56,7 +56,7 @@ body {
     border-radius: 1rem;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     width: 100%;
-    max-width: 500px;
+    max-width: 1200px;
 }
 
 h2 {
@@ -529,6 +529,209 @@ button:active {
     border-radius: 0.25rem;
     line-height: 1.4;
 }
+
+/* 双列布局 */
+.main-layout {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 2rem;
+    width: 100%;
+}
+
+.left-panel {
+    min-width: 0;
+}
+
+.right-panel {
+    min-width: 0;
+    min-height: 400px;
+    background: var(--bg);
+    border-radius: 0.75rem;
+    border: 2px dashed var(--border);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.right-panel.has-content {
+    border-style: solid;
+    border-color: var(--primary);
+    background: white;
+}
+
+.result-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.result-header h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.result-header .close-btn {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    background: transparent;
+    color: var(--text-light);
+    border-radius: 0.25rem;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.result-header .close-btn:hover {
+    background: var(--bg);
+    color: var(--text);
+    transform: none;
+}
+
+.result-placeholder {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    text-align: center;
+}
+
+.result-placeholder .icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.result-placeholder p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* Markdown 内容样式 */
+.markdown-content {
+    flex: 1;
+    overflow-y: auto;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.markdown-content h1 {
+    font-size: 1.5rem;
+    margin: 0 0 1rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary);
+}
+
+.markdown-content h2 {
+    font-size: 1.2rem;
+    margin: 1.5rem 0 0.75rem 0;
+    color: var(--text);
+}
+
+.markdown-content h3 {
+    font-size: 1rem;
+    margin: 1rem 0 0.5rem 0;
+}
+
+.markdown-content p {
+    margin: 0.5rem 0;
+}
+
+.markdown-content ul, .markdown-content ol {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+}
+
+.markdown-content li {
+    margin: 0.25rem 0;
+}
+
+.markdown-content strong {
+    color: var(--text);
+}
+
+.markdown-content code {
+    background: var(--bg);
+    padding: 0.1rem 0.3rem;
+    border-radius: 0.25rem;
+    font-family: monospace;
+    font-size: 0.85em;
+}
+
+.markdown-content pre {
+    background: var(--bg);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+}
+
+.markdown-content pre code {
+    background: transparent;
+    padding: 0;
+}
+
+.markdown-content blockquote {
+    margin: 0.5rem 0;
+    padding: 0.5rem 1rem;
+    border-left: 3px solid var(--primary);
+    background: var(--bg);
+    color: var(--text-light);
+}
+
+.markdown-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.5rem 0;
+}
+
+.markdown-content th, .markdown-content td {
+    border: 1px solid var(--border);
+    padding: 0.5rem;
+    text-align: left;
+}
+
+.markdown-content th {
+    background: var(--bg);
+    font-weight: 600;
+}
+
+/* 响应式布局 - 手机端 */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+        align-items: flex-start;
+    }
+    
+    .container {
+        padding: 1rem;
+    }
+    
+    .main-layout {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .right-panel {
+        min-height: 300px;
+        order: 2;
+    }
+    
+    .left-panel {
+        order: 1;
+    }
+    
+    h2 {
+        font-size: 1.25rem;
+    }
+}
 """
 
 
@@ -705,15 +908,7 @@ def render_config_page(
             resultHtml = '<div class="task-result"><span class="task-advice sell">失败</span></div>';
         }
         
-        let detailHtml = '';
-        if (status === 'completed' && result.name) {
-            detailHtml = '<div class="task-detail" id="detail_' + taskId + '">' +
-                '<div class="task-detail-row"><span class="label">趋势</span><span>' + (result.trend_prediction || '-') + '</span></div>' +
-                (result.analysis_summary ? '<div class="task-detail-summary">' + result.analysis_summary.substring(0, 100) + '...</div>' : '') +
-                '</div>';
-        }
-        
-        return '<div class="task-card ' + status + '" id="task_' + taskId + '" onclick="toggleDetail(\\''+taskId+'\\')">' +
+        return '<div class="task-card ' + status + '" id="task_' + taskId + '" onclick="showResult(\\''+taskId+'\\')">' +
             '<div class="task-status">' + statusIcon + '</div>' +
             '<div class="task-main">' +
                 '<div class="task-title">' +
@@ -729,7 +924,7 @@ def render_config_page(
             '<div class="task-actions">' +
                 '<button class="task-btn" onclick="event.stopPropagation();removeTask(\\''+taskId+'\\')">×</button>' +
             '</div>' +
-        '</div>' + detailHtml;
+        '</div>';
     }
     
     // 渲染所有任务
@@ -754,12 +949,90 @@ def render_config_page(
         taskList.innerHTML = html;
     }
     
-    // 切换详情显示
-    window.toggleDetail = function(taskId) {
-        const detail = document.getElementById('detail_' + taskId);
-        if (detail) {
-            detail.classList.toggle('show');
+    // 显示分析结果到右侧面板
+    window.showResult = function(taskId) {
+        const taskData = tasks.get(taskId);
+        if (!taskData || !taskData.task) return;
+        
+        const task = taskData.task;
+        const result = task.result || {};
+        const code = task.code || taskId.split('_')[0];
+        
+        // 构建 Markdown 内容
+        let markdown = '';
+        
+        if (task.status === 'completed' && result.name) {
+            markdown = '# ' + result.name + ' (' + code.toUpperCase() + ')\\n\\n';
+            
+            if (result.operation_advice) {
+                markdown += '## 操作建议\\n';
+                markdown += '**' + result.operation_advice + '**';
+                if (result.sentiment_score) {
+                    markdown += ' (评分: ' + result.sentiment_score + ')\\n\\n';
+                } else {
+                    markdown += '\\n\\n';
+                }
+            }
+            
+            if (result.trend_prediction) {
+                markdown += '## 趋势预测\\n';
+                markdown += result.trend_prediction + '\\n\\n';
+            }
+            
+            if (result.analysis_summary) {
+                markdown += '## 分析摘要\\n';
+                markdown += result.analysis_summary + '\\n\\n';
+            }
+            
+            if (result.full_analysis) {
+                markdown = result.full_analysis;
+            }
+        } else if (task.status === 'running') {
+            markdown = '# ' + code.toUpperCase() + '\\n\\n';
+            markdown += '⏳ **正在分析中...**\\n\\n';
+            markdown += '请稍候，分析完成后将自动更新结果。';
+        } else if (task.status === 'failed') {
+            markdown = '# ' + code.toUpperCase() + '\\n\\n';
+            markdown += '❌ **分析失败**\\n\\n';
+            if (task.error) {
+                markdown += '错误信息: ' + task.error;
+            }
+        } else {
+            markdown = '# ' + code.toUpperCase() + '\\n\\n';
+            markdown += '暂无分析结果';
         }
+        
+        // 渲染 Markdown
+        const panel = document.getElementById('result_panel');
+        const placeholder = document.getElementById('result_placeholder');
+        const content = document.getElementById('result_content');
+        const title = document.getElementById('result_title');
+        const markdownDiv = document.getElementById('markdown_content');
+        
+        panel.classList.add('has-content');
+        placeholder.style.display = 'none';
+        content.style.display = 'flex';
+        content.style.flexDirection = 'column';
+        content.style.flex = '1';
+        
+        title.textContent = result.name ? result.name + ' (' + code.toUpperCase() + ')' : code.toUpperCase() + ' 分析结果';
+        
+        if (typeof marked !== 'undefined') {
+            markdownDiv.innerHTML = marked.parse(markdown);
+        } else {
+            markdownDiv.innerHTML = '<pre style="white-space: pre-wrap;">' + markdown.replace(/\\\\n/g, '\\n') + '</pre>';
+        }
+    };
+    
+    // 关闭结果面板
+    window.closeResult = function() {
+        const panel = document.getElementById('result_panel');
+        const placeholder = document.getElementById('result_placeholder');
+        const content = document.getElementById('result_content');
+        
+        panel.classList.remove('has-content');
+        placeholder.style.display = 'flex';
+        content.style.display = 'none';
     };
     
     // 移除任务
@@ -893,49 +1166,54 @@ def render_config_page(
   <div class="container">
     <h2>📈 A/H股分析</h2>
     
-    <!-- 快速分析区域 -->
-    <div class="analysis-section" style="margin-top: 0; padding-top: 0; border-top: none;">
-      <div class="form-group" style="margin-bottom: 0.75rem;">
-        <div class="input-group">
-          <input 
-              type="text" 
-              id="analysis_code" 
-              placeholder="A股 600519 / 港股 hk00700"
-              maxlength="8"
-              autocomplete="off"
-          />
-          <button type="button" id="analysis_btn" class="btn-analysis" onclick="submitAnalysis()" disabled>
-            🚀 分析
-          </button>
+    <div class="main-layout">
+      <!-- 左侧面板：输入和任务列表 -->
+      <div class="left-panel">
+        <div class="analysis-section" style="margin-top: 0; padding-top: 0; border-top: none;">
+          <div class="form-group" style="margin-bottom: 0.75rem;">
+            <div class="input-group">
+              <input 
+                  type="text" 
+                  id="analysis_code" 
+                  placeholder="A股 600519 / 港股 hk00700"
+                  maxlength="8"
+                  autocomplete="off"
+              />
+              <button type="button" id="analysis_btn" class="btn-analysis" onclick="submitAnalysis()" disabled>
+                🚀 分析
+              </button>
+            </div>
+          </div>
+          <p class="text-muted" style="margin-top: 0.5rem;">💡 输入股票代码开始分析</p>
+          
+          <!-- 任务列表 -->
+          <div id="task_list" class="task-list"></div>
         </div>
       </div>
       
-      <!-- 任务列表 -->
-      <div id="task_list" class="task-list"></div>
-    </div>
-    
-    <hr class="section-divider">
-    
-    <!-- 自选股配置区域 -->
-    <form method="post" action="/update">
-      <div class="form-group">
-        <label for="stock_list">📋 自选股列表 <span class="code-badge">{html.escape(env_filename)}</span></label>
-        <p>仅用于本地环境 (127.0.0.1) • 安全修改 .env 配置</p>
-        <textarea 
-            id="stock_list" 
-            name="stock_list" 
-            rows="4" 
-            placeholder="例如: 600519, 000001 (逗号或换行分隔)"
-        >{safe_value}</textarea>
+      <!-- 右侧面板：分析结果展示 -->
+      <div class="right-panel" id="result_panel">
+        <div class="result-placeholder" id="result_placeholder">
+          <div class="icon">📊</div>
+          <p>分析结果将在这里展示</p>
+          <p style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.7;">点击左侧任务卡片查看详情</p>
+        </div>
+        <div id="result_content" style="display: none;">
+          <div class="result-header">
+            <h3 id="result_title">分析结果</h3>
+            <button class="close-btn" onclick="closeResult()">×</button>
+          </div>
+          <div class="markdown-content" id="markdown_content"></div>
+        </div>
       </div>
-      <button type="submit">💾 保存</button>
-    </form>
+    </div>
     
     <div class="footer">
       <p>API: <code>/health</code> · <code>/analysis?code=xxx</code> · <code>/tasks</code></p>
     </div>
   </div>
   
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   {toast_html}
   {analysis_js}
 """
