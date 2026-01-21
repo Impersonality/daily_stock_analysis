@@ -299,8 +299,127 @@ button:active {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    max-height: 400px;
+    max-height: 600px;
+    max-height: 600px;
     overflow-y: auto;
+}
+
+/* Task Grouping */
+.task-group {
+    margin-bottom: 0.75rem;
+}
+
+.group-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.4rem 0.5rem;
+    font-size: 0.75rem;
+    color: var(--text-light);
+    cursor: pointer;
+    user-select: none;
+    background: rgba(0,0,0,0.02);
+    border-radius: 0.375rem;
+    margin-bottom: 0.25rem;
+    transition: background 0.2s;
+}
+
+.group-header:hover {
+    background: rgba(0,0,0,0.05);
+}
+
+.group-title {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.group-header .arrow {
+    font-size: 0.7rem;
+    transition: transform 0.2s;
+}
+
+.group-header.collapsed .arrow {
+    transform: rotate(-90deg);
+}
+
+.group-count {
+    background: rgba(0,0,0,0.05);
+    padding: 0.1rem 0.35rem;
+    border-radius: 0.25rem;
+    font-size: 0.7rem;
+}
+
+.group-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: all 0.2s;
+    overflow: hidden;
+}
+
+.group-content.collapsed {
+    display: none;
+}
+
+/* Task Grouping */
+.task-group {
+    margin-bottom: 0.75rem;
+}
+
+.group-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.4rem 0.5rem;
+    font-size: 0.75rem;
+    color: var(--text-light);
+    cursor: pointer;
+    user-select: none;
+    background: rgba(0,0,0,0.02);
+    border-radius: 0.375rem;
+    margin-bottom: 0.25rem;
+    transition: background 0.2s;
+}
+
+.group-header:hover {
+    background: rgba(0,0,0,0.05);
+}
+
+.group-title {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.group-header .arrow {
+    font-size: 0.7rem;
+    transition: transform 0.2s;
+}
+
+.group-header.collapsed .arrow {
+    transform: rotate(-90deg);
+}
+
+.group-count {
+    background: rgba(0,0,0,0.05);
+    padding: 0.1rem 0.35rem;
+    border-radius: 0.25rem;
+    font-size: 0.7rem;
+}
+
+.group-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: all 0.2s;
+    overflow: hidden;
+}
+
+.group-content.collapsed {
+    display: none;
 }
 
 .task-list:empty::after {
@@ -594,6 +713,60 @@ button:active {
     transform: none;
 }
 
+.result-header .action-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-detail {
+    background: transparent;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-detail:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-detail.active {
+    background: var(--primary);
+    color: white;
+}
+
+.result-header .action-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-detail {
+    background: transparent;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-detail:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-detail.active {
+    background: var(--primary);
+    color: white;
+}
+
 .result-placeholder {
     flex: 1;
     display: flex;
@@ -731,6 +904,168 @@ button:active {
     h2 {
         font-size: 1.25rem;
     }
+}
+
+/* Tab 导航样式 */
+.tab-nav {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid var(--border);
+    margin-bottom: 1.5rem;
+}
+
+.tab-item {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    background: transparent;
+    color: var(--text-light);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.tab-item:hover {
+    color: var(--primary);
+    background: rgba(37, 99, 235, 0.05);
+}
+
+.tab-item.active {
+    color: var(--primary);
+}
+
+.tab-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--primary);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* 大盘复盘页面样式 */
+.market-page {
+    height: 100%;
+}
+
+.market-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    color: var(--text-light);
+}
+
+.market-loading .spinner {
+    width: 32px;
+    height: 32px;
+    border-width: 3px;
+    margin-bottom: 1rem;
+}
+
+.market-error {
+    text-align: center;
+    padding: 2rem;
+    color: var(--error);
+}
+
+.market-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.market-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.market-header .date-info {
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+.btn-refresh {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-light);
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: auto;
+}
+
+.btn-refresh:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: rgba(37, 99, 235, 0.05);
+    transform: none;
+}
+
+.btn-refresh:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.market-report {
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* 大盘复盘折叠样式 */
+.market-collapse-header {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    padding: 0.5rem 0;
+    transition: all 0.2s;
+}
+
+.market-collapse-header:hover {
+    opacity: 0.8;
+}
+
+.market-collapse-header .arrow {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 0.5rem;
+    transition: transform 0.3s ease;
+    color: var(--text-light);
+    font-size: 0.8rem;
+}
+
+.market-collapse-header.collapsed .arrow {
+    transform: rotate(-90deg);
+}
+
+.market-collapse-content {
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    max-height: 5000px;
+    opacity: 1;
+}
+
+.market-collapse-content.collapsed {
+    max-height: 0;
+    opacity: 0;
 }
 """
 
@@ -927,24 +1262,203 @@ def render_config_page(
         '</div>';
     }
     
-    // 渲染所有任务
+    // 移除任务
+    window.removeTask = function(taskId) {
+        if (confirm('确定删除该任务历史记录？')) {
+            // 先从前端移除以快速响应
+            tasks.delete(taskId);
+            renderAllTasks();
+            checkStopPolling();
+            
+            // 后台发送删除请求
+            fetch('/task/delete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'task_id=' + encodeURIComponent(taskId)
+            }).then(r => r.json())
+              .then(data => {
+                  if (!data.success) {
+                      console.error('删除失败:', data.error);
+                  }
+              })
+              .catch(err => console.error('删除请求错误:', err));
+        }
+    };
+    
+    // 切换组展开状态
+    window.toggleGroup = function(dateStr) {
+        const groupContent = document.getElementById('group_content_' + dateStr);
+        const groupHeader = document.getElementById('group_header_' + dateStr);
+        if (groupContent && groupHeader) {
+            const isCollapsed = groupContent.classList.contains('collapsed');
+            if (isCollapsed) {
+                groupContent.classList.remove('collapsed');
+                groupHeader.classList.remove('collapsed');
+            } else {
+                groupContent.classList.add('collapsed');
+                groupHeader.classList.add('collapsed');
+            }
+        }
+    };
+
+    // 渲染所有任务（分组显示）
+    // 移除任务
+    window.removeTask = function(taskId) {
+        if (confirm('确定删除该任务历史记录？')) {
+            // 先从前端移除以快速响应
+            tasks.delete(taskId);
+            renderAllTasks();
+            checkStopPolling();
+            
+            // 后台发送删除请求
+            fetch('/task/delete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'task_id=' + encodeURIComponent(taskId)
+            }).then(r => r.json())
+              .then(data => {
+                  if (!data.success) {
+                      console.error('删除失败:', data.error);
+                  }
+              })
+              .catch(err => console.error('删除请求错误:', err));
+        }
+    };
+    
+    // 切换组展开状态
+    window.toggleGroup = function(dateStr) {
+        const groupContent = document.getElementById('group_content_' + dateStr);
+        const groupHeader = document.getElementById('group_header_' + dateStr);
+        if (groupContent && groupHeader) {
+            const isCollapsed = groupContent.classList.contains('collapsed');
+            if (isCollapsed) {
+                groupContent.classList.remove('collapsed');
+                groupHeader.classList.remove('collapsed');
+            } else {
+                groupContent.classList.add('collapsed');
+                groupHeader.classList.add('collapsed');
+            }
+        }
+    };
+
+    // 渲染所有任务（分组显示）
     function renderAllTasks() {
         if (tasks.size === 0) {
             taskList.innerHTML = '<div class="task-hint">💡 输入股票代码开始分析</div>';
             return;
         }
         
-        let html = '';
-        const sortedTasks = Array.from(tasks.entries())
-            .sort((a, b) => (b[1].task?.start_time || '').localeCompare(a[1].task?.start_time || ''));
+        // 1. 分组
+        const groups = {}; // date(YYYY-MM-DD) -> [taskData]
+        const today = new Date().toLocaleDateString('zh-CN', {year:'numeric', month:'2-digit', day:'2-digit'}).replace(/\\//g, '-');
         
-        sortedTasks.slice(0, MAX_TASKS_DISPLAY).forEach(([taskId, taskData]) => {
-            html += renderTaskCard(taskId, taskData);
+        tasks.forEach((taskData, taskId) => {
+            let start = taskData.task?.start_time;
+            let dateStr = '未知日期';
+            if (start) {
+                const d = new Date(start);
+                dateStr = d.toLocaleDateString('zh-CN', {year:'numeric', month:'2-digit', day:'2-digit'}).replace(/\\//g, '-');
+            }
+            if (!groups[dateStr]) groups[dateStr] = [];
+            groups[dateStr].push({ id: taskId, data: taskData });
         });
         
-        if (sortedTasks.length > MAX_TASKS_DISPLAY) {
-            html += '<div class="task-hint">... 还有 ' + (sortedTasks.length - MAX_TASKS_DISPLAY) + ' 个任务</div>';
-        }
+        // 2. 排序日期（倒序）
+        const sortedDates = Object.keys(groups).sort((a, b) => b.localeCompare(a));
+        
+        // 1. 分组
+        const groups = {}; // date(YYYY-MM-DD) -> [taskData]
+        const today = new Date().toLocaleDateString('zh-CN', {year:'numeric', month:'2-digit', day:'2-digit'}).replace(/\\//g, '-');
+        
+        tasks.forEach((taskData, taskId) => {
+            let start = taskData.task?.start_time;
+            let dateStr = '未知日期';
+            if (start) {
+                const d = new Date(start);
+                dateStr = d.toLocaleDateString('zh-CN', {year:'numeric', month:'2-digit', day:'2-digit'}).replace(/\\//g, '-');
+            }
+            if (!groups[dateStr]) groups[dateStr] = [];
+            groups[dateStr].push({ id: taskId, data: taskData });
+        });
+        
+        // 2. 排序日期（倒序）
+        const sortedDates = Object.keys(groups).sort((a, b) => b.localeCompare(a));
+        
+        // 1. 分组
+        const groups = {}; // date(YYYY-MM-DD) -> [taskData]
+        const today = new Date().toLocaleDateString('zh-CN', {year:'numeric', month:'2-digit', day:'2-digit'}).replace(/\\//g, '-');
+        
+        tasks.forEach((taskData, taskId) => {
+            let start = taskData.task?.start_time;
+            let dateStr = '未知日期';
+            if (start) {
+                const d = new Date(start);
+                dateStr = d.toLocaleDateString('zh-CN', {year:'numeric', month:'2-digit', day:'2-digit'}).replace(/\\//g, '-');
+            }
+            if (!groups[dateStr]) groups[dateStr] = [];
+            groups[dateStr].push({ id: taskId, data: taskData });
+        });
+        
+        // 2. 排序日期（倒序）
+        const sortedDates = Object.keys(groups).sort((a, b) => b.localeCompare(a));
+        
+        let html = '';
+        
+        sortedDates.forEach(dateStr => {
+            const groupTasks = groups[dateStr];
+            // 组内按时间倒序
+            groupTasks.sort((a, b) => (b.data.task?.start_time || '').localeCompare(a.data.task?.start_time || ''));
+            
+            const isToday = dateStr === today;
+            const collapsedClass = isToday ? '' : 'collapsed'; // 今天默认展开，其他折叠
+            
+            html += '<div class="task-group">';
+            
+            // Group Header
+            html += `<div class="group-header ${collapsedClass}" id="group_header_${dateStr}" onclick="toggleGroup('${dateStr}')">`;
+            html += `<span class="group-title"><span class="arrow">▼</span> ${dateStr === today ? '📅 今天' : '📅 ' + dateStr}</span>`;
+            html += `<span class="group-count">${groupTasks.length}</span>`;
+            html += `</div>`;
+            
+            // Group Content
+            html += `<div class="group-content ${collapsedClass}" id="group_content_${dateStr}">`;
+            groupTasks.forEach(item => {
+                html += renderTaskCard(item.id, item.data);
+            });
+            html += `</div>`; // end group-content
+            
+            html += '</div>'; // end task-group
+        });
+        
+        sortedDates.forEach(dateStr => {
+            const groupTasks = groups[dateStr];
+            // 组内按时间倒序
+            groupTasks.sort((a, b) => (b.data.task?.start_time || '').localeCompare(a.data.task?.start_time || ''));
+            
+            const isToday = dateStr === today;
+            const collapsedClass = isToday ? '' : 'collapsed'; // 今天默认展开，其他折叠
+            
+            html += '<div class="task-group">';
+            
+            // Group Header
+            html += `<div class="group-header ${collapsedClass}" id="group_header_${dateStr}" onclick="toggleGroup('${dateStr}')">`;
+            html += `<span class="group-title"><span class="arrow">▼</span> ${dateStr === today ? '📅 今天' : '📅 ' + dateStr}</span>`;
+            html += `<span class="group-count">${groupTasks.length}</span>`;
+            html += `</div>`;
+            
+            // Group Content
+            html += `<div class="group-content ${collapsedClass}" id="group_content_${dateStr}">`;
+            groupTasks.forEach(item => {
+                html += renderTaskCard(item.id, item.data);
+            });
+            html += `</div>`; // end group-content
+            
+            html += '</div>'; // end task-group
+        });
         
         taskList.innerHTML = html;
     }
@@ -964,28 +1478,62 @@ def render_config_page(
         if (task.status === 'completed' && result.name) {
             markdown = '# ' + result.name + ' (' + code.toUpperCase() + ')\\n\\n';
             
-            if (result.operation_advice) {
-                markdown += '## 操作建议\\n';
-                markdown += '**' + result.operation_advice + '**';
-                if (result.sentiment_score) {
-                    markdown += ' (评分: ' + result.sentiment_score + ')\\n\\n';
-                } else {
-                    markdown += '\\n\\n';
+            // 如果是详情模式，生成详细报告
+            if (window.isDetailMode) {
+                 markdown += generateDetailMarkdown(result, code);
+            } else {
+                // 标准模式
+                if (result.operation_advice) {
+                    markdown += '## 操作建议\\n';
+                    markdown += '**' + result.operation_advice + '**';
+                    if (result.sentiment_score) {
+                        markdown += ' (评分: ' + result.sentiment_score + ')\\n\\n';
+                    } else {
+                        markdown += '\\n\\n';
+                    }
                 }
-            }
-            
-            if (result.trend_prediction) {
-                markdown += '## 趋势预测\\n';
-                markdown += result.trend_prediction + '\\n\\n';
-            }
-            
-            if (result.analysis_summary) {
-                markdown += '## 分析摘要\\n';
-                markdown += result.analysis_summary + '\\n\\n';
-            }
-            
-            if (result.full_analysis) {
-                markdown = result.full_analysis;
+                
+                if (result.trend_prediction) {
+                    markdown += '## 趋势预测\\n';
+                    markdown += result.trend_prediction + '\\n\\n';
+                }
+                
+                if (result.analysis_summary) {
+                    markdown += '## 分析摘要\\n';
+                    markdown += result.analysis_summary + '\\n\\n';
+                }
+                
+                if (result.full_analysis) {
+                    markdown = result.full_analysis;
+                }
+            // 如果是详情模式，生成详细报告
+            if (window.isDetailMode) {
+                 markdown += generateDetailMarkdown(result, code);
+            } else {
+                // 标准模式
+                if (result.operation_advice) {
+                    markdown += '## 操作建议\\n';
+                    markdown += '**' + result.operation_advice + '**';
+                    if (result.sentiment_score) {
+                        markdown += ' (评分: ' + result.sentiment_score + ')\\n\\n';
+                    } else {
+                        markdown += '\\n\\n';
+                    }
+                }
+                
+                if (result.trend_prediction) {
+                    markdown += '## 趋势预测\\n';
+                    markdown += result.trend_prediction + '\\n\\n';
+                }
+                
+                if (result.analysis_summary) {
+                    markdown += '## 分析摘要\\n';
+                    markdown += result.analysis_summary + '\\n\\n';
+                }
+                
+                if (result.full_analysis) {
+                    markdown = result.full_analysis;
+                }
             }
         } else if (task.status === 'running') {
             markdown = '# ' + code.toUpperCase() + '\\n\\n';
@@ -1008,12 +1556,50 @@ def render_config_page(
         const content = document.getElementById('result_content');
         const title = document.getElementById('result_title');
         const markdownDiv = document.getElementById('markdown_content');
+        const detailBtn = document.getElementById('btn_detail_toggle');
+        
+        // 保存当前查看的任务ID
+        window.currentTaskId = taskId;
+        const detailBtn = document.getElementById('btn_detail_toggle');
+        
+        // 保存当前查看的任务ID
+        window.currentTaskId = taskId;
         
         panel.classList.add('has-content');
         placeholder.style.display = 'none';
         content.style.display = 'flex';
         content.style.flexDirection = 'column';
         content.style.flex = '1';
+        
+        // 更新按钮状态
+        if (detailBtn) {
+            if (task.status === 'completed' && result.name) {
+                detailBtn.style.display = 'block';
+                detailBtn.textContent = window.isDetailMode ? '返回摘要' : '查看详情';
+                if (window.isDetailMode) {
+                    detailBtn.classList.add('active');
+                } else {
+                    detailBtn.classList.remove('active');
+                }
+            } else {
+                detailBtn.style.display = 'none';
+            }
+        }
+        
+        // 更新按钮状态
+        if (detailBtn) {
+            if (task.status === 'completed' && result.name) {
+                detailBtn.style.display = 'block';
+                detailBtn.textContent = window.isDetailMode ? '返回摘要' : '查看详情';
+                if (window.isDetailMode) {
+                    detailBtn.classList.add('active');
+                } else {
+                    detailBtn.classList.remove('active');
+                }
+            } else {
+                detailBtn.style.display = 'none';
+            }
+        }
         
         title.textContent = result.name ? result.name + ' (' + code.toUpperCase() + ')' : code.toUpperCase() + ' 分析结果';
         
@@ -1023,6 +1609,168 @@ def render_config_page(
             markdownDiv.innerHTML = '<pre style="white-space: pre-wrap;">' + markdown.replace(/\\\\n/g, '\\n') + '</pre>';
         }
     };
+    
+    // 切换详情模式
+    window.toggleDetailMode = function() {
+        window.isDetailMode = !window.isDetailMode;
+        if (window.currentTaskId) {
+            window.showResult(window.currentTaskId);
+        }
+    };
+    
+    // 生成详细 Markdown (仿照 Python generate_dashboard_report)
+    function generateDetailMarkdown(result, code) {
+        let lines = [];
+        const dashboard = result.dashboard || {};
+        const core = dashboard.core_conclusion || {};
+        const intel = dashboard.intelligence || {};
+        const battle = dashboard.battle_plan || {};
+        const data_persp = dashboard.data_perspective || {};
+        
+        // 核心结论
+        if (dashboard) {
+            const one_sentence = core.one_sentence || result.analysis_summary;
+            const time_sense = core.time_sensitivity || '本周内';
+            
+            lines.push(`### 📌 核心结论\\n`);
+            lines.push(`**${result.operation_advice}** | ${result.trend_prediction}\\n`);
+            lines.push(`> **一句话决策**: ${one_sentence}\\n`);
+            lines.push(`⏰ **时效性**: ${time_sense}\\n`);
+        }
+        
+        // 重要信息
+        if (intel) {
+             lines.push(`### 📰 重要信息\\n`);
+             
+             if (intel.earnings_outlook) {
+                 lines.push(`**📊 业绩预期**: ${intel.earnings_outlook}\\n`);
+             }
+             if (intel.sentiment_summary) {
+                 lines.push(`**💭 舆情情绪**: ${intel.sentiment_summary}\\n`);
+             }
+             
+             if (intel.risk_alerts && intel.risk_alerts.length > 0) {
+                 lines.push(`\\n**🚨 风险警报**:`);
+                 intel.risk_alerts.forEach(alert => lines.push(`- ${alert}`));
+                 lines.push(``);
+             }
+             
+             if (intel.positive_catalysts && intel.positive_catalysts.length > 0) {
+                 lines.push(`\\n**✨ 利好催化**:`);
+                 intel.positive_catalysts.forEach(cat => lines.push(`- ${cat}`));
+                 lines.push(``);
+             }
+        }
+        
+        // 操盘点位 (Battle Plan)
+        if (battle) {
+             lines.push(`### 🎯 操作点位\\n`);
+             
+             const sniper = battle.sniper_points || {};
+             if (sniper) {
+                 lines.push(`| 买点 | 止损 | 目标 |`);
+                 lines.push(`|---|---|---|`);
+                 lines.push(`| ${sniper.ideal_buy || '-'} | ${sniper.stop_loss || '-'} | ${sniper.take_profit || '-'} |\\n`);
+             }
+             
+             const pos = battle.position_strategy || {};
+             if (pos) {
+                 lines.push(`**持仓建议**: ${pos.suggested_position || '-'}`);
+                 if (pos.entry_plan) lines.push(`- 建仓: ${pos.entry_plan}`);
+                 if (pos.risk_control) lines.push(`- 风控: ${pos.risk_control}`);
+                 lines.push(``);
+             }
+        }
+        
+        // 如果没有 Dashboard 数据，显示一些基础信息
+        if (!dashboard || Object.keys(dashboard).length === 0) {
+            lines.push(`*(暂无详细数据，显示基础分析)*\\n`);
+            if (result.analysis_summary) lines.push(result.analysis_summary);
+        }
+        
+        return lines.join('\\n');
+    }
+    
+    // 切换详情模式
+    window.toggleDetailMode = function() {
+        window.isDetailMode = !window.isDetailMode;
+        if (window.currentTaskId) {
+            window.showResult(window.currentTaskId);
+        }
+    };
+    
+    // 生成详细 Markdown (仿照 Python generate_dashboard_report)
+    function generateDetailMarkdown(result, code) {
+        let lines = [];
+        const dashboard = result.dashboard || {};
+        const core = dashboard.core_conclusion || {};
+        const intel = dashboard.intelligence || {};
+        const battle = dashboard.battle_plan || {};
+        const data_persp = dashboard.data_perspective || {};
+        
+        // 核心结论
+        if (dashboard) {
+            const one_sentence = core.one_sentence || result.analysis_summary;
+            const time_sense = core.time_sensitivity || '本周内';
+            
+            lines.push(`### 📌 核心结论\\n`);
+            lines.push(`**${result.operation_advice}** | ${result.trend_prediction}\\n`);
+            lines.push(`> **一句话决策**: ${one_sentence}\\n`);
+            lines.push(`⏰ **时效性**: ${time_sense}\\n`);
+        }
+        
+        // 重要信息
+        if (intel) {
+             lines.push(`### 📰 重要信息\\n`);
+             
+             if (intel.earnings_outlook) {
+                 lines.push(`**📊 业绩预期**: ${intel.earnings_outlook}\\n`);
+             }
+             if (intel.sentiment_summary) {
+                 lines.push(`**💭 舆情情绪**: ${intel.sentiment_summary}\\n`);
+             }
+             
+             if (intel.risk_alerts && intel.risk_alerts.length > 0) {
+                 lines.push(`\\n**🚨 风险警报**:`);
+                 intel.risk_alerts.forEach(alert => lines.push(`- ${alert}`));
+                 lines.push(``);
+             }
+             
+             if (intel.positive_catalysts && intel.positive_catalysts.length > 0) {
+                 lines.push(`\\n**✨ 利好催化**:`);
+                 intel.positive_catalysts.forEach(cat => lines.push(`- ${cat}`));
+                 lines.push(``);
+             }
+        }
+        
+        // 操盘点位 (Battle Plan)
+        if (battle) {
+             lines.push(`### 🎯 操作点位\\n`);
+             
+             const sniper = battle.sniper_points || {};
+             if (sniper) {
+                 lines.push(`| 买点 | 止损 | 目标 |`);
+                 lines.push(`|---|---|---|`);
+                 lines.push(`| ${sniper.ideal_buy || '-'} | ${sniper.stop_loss || '-'} | ${sniper.take_profit || '-'} |\\n`);
+             }
+             
+             const pos = battle.position_strategy || {};
+             if (pos) {
+                 lines.push(`**持仓建议**: ${pos.suggested_position || '-'}`);
+                 if (pos.entry_plan) lines.push(`- 建仓: ${pos.entry_plan}`);
+                 if (pos.risk_control) lines.push(`- 风控: ${pos.risk_control}`);
+                 lines.push(``);
+             }
+        }
+        
+        // 如果没有 Dashboard 数据，显示一些基础信息
+        if (!dashboard || Object.keys(dashboard).length === 0) {
+            lines.push(`*(暂无详细数据，显示基础分析)*\\n`);
+            if (result.analysis_summary) lines.push(result.analysis_summary);
+        }
+        
+        return lines.join('\\n');
+    }
     
     // 关闭结果面板
     window.closeResult = function() {
@@ -1035,12 +1783,8 @@ def render_config_page(
         content.style.display = 'none';
     };
     
-    // 移除任务
-    window.removeTask = function(taskId) {
-        tasks.delete(taskId);
-        renderAllTasks();
-        checkStopPolling();
-    };
+
+
     
     // 轮询所有运行中的任务
     function pollAllTasks() {
@@ -1157,63 +1901,251 @@ def render_config_page(
     
     // 初始化
     updateButtonState();
-    renderAllTasks();
+    
+    // 加载历史任务
+    fetch('/tasks?limit=50')
+        .then(r => r.json())
+        .then(data => {
+            if (data.success && data.tasks) {
+                data.tasks.forEach(task => {
+                    // 恢复任务数据
+                    tasks.set(task.task_id, { 
+                        task: task, 
+                        pollCount: 0 
+                    });
+                });
+                renderAllTasks();
+                // 如果有未完成的任务，继续轮询
+                if (tasks.size > 0) {
+                    checkStopPolling();
+                    startPolling();
+                }
+            } else {
+                renderAllTasks();
+            }
+        })
+        .catch(err => {
+            console.error('加载历史任务失败', err);
+            renderAllTasks();
+        });
+    
+    // 加载历史任务
+    fetch('/tasks?limit=50')
+        .then(r => r.json())
+        .then(data => {
+            if (data.success && data.tasks) {
+                data.tasks.forEach(task => {
+                    // 恢复任务数据
+                    tasks.set(task.task_id, { 
+                        task: task, 
+                        pollCount: 0 
+                    });
+                });
+                renderAllTasks();
+                // 如果有未完成的任务，继续轮询
+                if (tasks.size > 0) {
+                    checkStopPolling();
+                    startPolling();
+                }
+            } else {
+                renderAllTasks();
+            }
+        })
+        .catch(err => {
+            console.error('加载历史任务失败', err);
+            renderAllTasks();
+        });
 })();
 </script>
 """
     
     content = f"""
   <div class="container">
-    <h2>📈 A/H股分析</h2>
+    <h2>📊 A/H股分析</h2>
     
-    <div class="main-layout">
-      <!-- 左侧面板：输入和任务列表 -->
-      <div class="left-panel">
-        <div class="analysis-section" style="margin-top: 0; padding-top: 0; border-top: none;">
-          <div class="form-group" style="margin-bottom: 0.75rem;">
-            <div class="input-group">
-              <input 
-                  type="text" 
-                  id="analysis_code" 
-                  placeholder="A股 600519 / 港股 hk00700"
-                  maxlength="8"
-                  autocomplete="off"
-              />
-              <button type="button" id="analysis_btn" class="btn-analysis" onclick="submitAnalysis()" disabled>
-                🚀 分析
-              </button>
+    <!-- Tab 导航 -->
+    <div class="tab-nav">
+      <button class="tab-item active" onclick="switchTab('stock')" id="tab_stock">📈 个股分析</button>
+      <button class="tab-item" onclick="switchTab('market')" id="tab_market">🏦 每日大盘</button>
+    </div>
+    
+    <!-- 个股分析 Tab -->
+    <div id="content_stock" class="tab-content active">
+      <div class="main-layout">
+        <!-- 左侧面板：输入和任务列表 -->
+        <div class="left-panel">
+          <div class="analysis-section" style="margin-top: 0; padding-top: 0; border-top: none;">
+            <div class="form-group" style="margin-bottom: 0.75rem;">
+              <div class="input-group">
+                <input 
+                    type="text" 
+                    id="analysis_code" 
+                    placeholder="A股 600519 / 港股 hk00700"
+                    maxlength="8"
+                    autocomplete="off"
+                />
+                <button type="button" id="analysis_btn" class="btn-analysis" onclick="submitAnalysis()" disabled>
+                  🚀 分析
+                </button>
+              </div>
             </div>
+            <p class="text-muted" style="margin-top: 0.5rem;">💡 输入股票代码开始分析</p>
+            
+            <!-- 任务列表 -->
+            <div id="task_list" class="task-list"></div>
           </div>
-          <p class="text-muted" style="margin-top: 0.5rem;">💡 输入股票代码开始分析</p>
-          
-          <!-- 任务列表 -->
-          <div id="task_list" class="task-list"></div>
+        </div>
+        
+        <!-- 右侧面板：分析结果展示 -->
+        <div class="right-panel" id="result_panel">
+          <div class="result-placeholder" id="result_placeholder">
+            <div class="icon">📊</div>
+            <p>分析结果将在这里展示</p>
+            <p style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.7;">点击左侧任务卡片查看详情</p>
+          </div>
+          <div id="result_content" style="display: none;">
+            <div class="result-header">
+              <h3 id="result_title">分析结果</h3>
+              <div class="action-group">
+                  <button id="btn_detail_toggle" class="btn-detail" onclick="toggleDetailMode()" style="display: none;">查看详情</button>
+                  <button class="close-btn" onclick="closeResult()">×</button>
+              </div>
+            </div>
+            <div class="markdown-content" id="markdown_content"></div>
+          </div>
         </div>
       </div>
-      
-      <!-- 右侧面板：分析结果展示 -->
-      <div class="right-panel" id="result_panel">
-        <div class="result-placeholder" id="result_placeholder">
-          <div class="icon">📊</div>
-          <p>分析结果将在这里展示</p>
-          <p style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.7;">点击左侧任务卡片查看详情</p>
-        </div>
-        <div id="result_content" style="display: none;">
-          <div class="result-header">
-            <h3 id="result_title">分析结果</h3>
-            <button class="close-btn" onclick="closeResult()">×</button>
+    </div>
+    
+    <!-- 每日大盘 Tab -->
+    <div id="content_market" class="tab-content">
+      <div class="market-page">
+        <div class="market-header">
+          <div class="market-collapse-header" id="market_collapse_header" onclick="toggleMarketCollapse()">
+            <span class="arrow">▼</span>
+            <h3 style="margin: 0;">📊 大盘复盘</h3>
           </div>
-          <div class="markdown-content" id="markdown_content"></div>
+          <span class="date-info" id="market_date"></span>
+          <button class="btn-refresh" onclick="event.stopPropagation(); refreshMarketReview()" id="btn_refresh_market">🔄 刷新</button>
+        </div>
+        <div id="market_content" class="market-report market-collapse-content">
+          <div class="market-loading">
+            <span class="spinner"></span>
+            <p>正在加载大盘复盘...</p>
+          </div>
         </div>
       </div>
     </div>
     
     <div class="footer">
-      <p>API: <code>/health</code> · <code>/analysis?code=xxx</code> · <code>/tasks</code></p>
+      <p>API: <code>/health</code> · <code>/analysis?code=xxx</code> · <code>/api/market/review</code></p>
     </div>
   </div>
   
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  
+  <!-- Tab 切换和大盘复盘逻辑 -->
+  <script>
+    let marketLoaded = false;
+    let marketLoading = false;
+    
+    function switchTab(tabName) {{
+        // 切换 Tab 按钮状态
+        document.querySelectorAll('.tab-item').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('tab_' + tabName).classList.add('active');
+        
+        // 切换内容区域
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        document.getElementById('content_' + tabName).classList.add('active');
+        
+        // 如果切换到大盘 Tab 且未加载，自动加载
+        if (tabName === 'market' && !marketLoaded && !marketLoading) {{
+            loadMarketReview();
+        }}
+    }}
+    
+    function loadMarketReview(forceRefresh = false) {{
+        if (marketLoading) return;
+        marketLoading = true;
+        
+        const contentDiv = document.getElementById('market_content');
+        const dateSpan = document.getElementById('market_date');
+        const refreshBtn = document.getElementById('btn_refresh_market');
+        
+        // 显示加载状态
+        contentDiv.innerHTML = '<div class="market-loading"><span class="spinner"></span><p>正在加载大盘复盘...</p></div>';
+        refreshBtn.disabled = true;
+        refreshBtn.textContent = '加载中...';
+        
+        const url = forceRefresh ? '/api/market/review?refresh=1' : '/api/market/review';
+        
+        fetch(url)
+            .then(r => r.json())
+            .then(data => {{
+                if (data.success && data.data) {{
+                    const review = data.data;
+                    dateSpan.textContent = review.date + ' 生成于 ' + new Date(review.generated_at).toLocaleTimeString('zh-CN');
+                    
+                    // 渲染 Markdown
+                    if (typeof marked !== 'undefined' && review.report) {{
+                        contentDiv.innerHTML = '<div class="markdown-content">' + marked.parse(review.report) + '</div>';
+                    }} else {{
+                        contentDiv.innerHTML = '<pre style="white-space: pre-wrap;">' + (review.report || '暂无内容') + '</pre>';
+                    }}
+                    
+                    // 检查是否是今天的复盘，非今天的默认折叠
+                    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+                    const isToday = review.date === today;
+                    const header = document.getElementById('market_collapse_header');
+                    
+                    if (!isToday && header) {{
+                        // 非今天的复盘，默认折叠
+                        header.classList.add('collapsed');
+                        contentDiv.classList.add('collapsed');
+                    }} else if (header) {{
+                        // 今天的复盘，确保展开
+                        header.classList.remove('collapsed');
+                        contentDiv.classList.remove('collapsed');
+                    }}
+                    
+                    marketLoaded = true;
+                }} else {{
+                    contentDiv.innerHTML = '<div class="market-error"><p>❌ 加载失败</p><p>' + (data.error || '未知错误') + '</p></div>';
+                }}
+            }})
+            .catch(err => {{
+                contentDiv.innerHTML = '<div class="market-error"><p>❌ 请求失败</p><p>' + err.message + '</p></div>';
+            }})
+            .finally(() => {{
+                marketLoading = false;
+                refreshBtn.disabled = false;
+                refreshBtn.textContent = '🔄 刷新';
+            }});
+    }}
+    
+    function refreshMarketReview() {{
+        marketLoaded = false;
+        loadMarketReview(true);
+    }}
+    
+    // 切换大盘复盘折叠状态
+    function toggleMarketCollapse() {{
+        const header = document.getElementById('market_collapse_header');
+        const content = document.getElementById('market_content');
+        
+        if (header && content) {{
+            const isCollapsed = content.classList.contains('collapsed');
+            if (isCollapsed) {{
+                header.classList.remove('collapsed');
+                content.classList.remove('collapsed');
+            }} else {{
+                header.classList.add('collapsed');
+                content.classList.add('collapsed');
+            }}
+        }}
+    }}
+  </script>
+  
   {toast_html}
   {analysis_js}
 """
