@@ -1352,42 +1352,7 @@ def render_config_page(
             return;
         }
         
-        // 1. 分组
-        const groups = {}; // date(YYYY-MM-DD) -> [taskData]
-        const today = new Date().toLocaleDateString('zh-CN', {year:'numeric', month:'2-digit', day:'2-digit'}).replace(/\\//g, '-');
-        
-        tasks.forEach((taskData, taskId) => {
-            let start = taskData.task?.start_time;
-            let dateStr = '未知日期';
-            if (start) {
-                const d = new Date(start);
-                dateStr = d.toLocaleDateString('zh-CN', {year:'numeric', month:'2-digit', day:'2-digit'}).replace(/\\//g, '-');
-            }
-            if (!groups[dateStr]) groups[dateStr] = [];
-            groups[dateStr].push({ id: taskId, data: taskData });
-        });
-        
-        // 2. 排序日期（倒序）
-        const sortedDates = Object.keys(groups).sort((a, b) => b.localeCompare(a));
-        
-        // 1. 分组
-        const groups = {}; // date(YYYY-MM-DD) -> [taskData]
-        const today = new Date().toLocaleDateString('zh-CN', {year:'numeric', month:'2-digit', day:'2-digit'}).replace(/\\//g, '-');
-        
-        tasks.forEach((taskData, taskId) => {
-            let start = taskData.task?.start_time;
-            let dateStr = '未知日期';
-            if (start) {
-                const d = new Date(start);
-                dateStr = d.toLocaleDateString('zh-CN', {year:'numeric', month:'2-digit', day:'2-digit'}).replace(/\\//g, '-');
-            }
-            if (!groups[dateStr]) groups[dateStr] = [];
-            groups[dateStr].push({ id: taskId, data: taskData });
-        });
-        
-        // 2. 排序日期（倒序）
-        const sortedDates = Object.keys(groups).sort((a, b) => b.localeCompare(a));
-        
+
         // 1. 分组
         const groups = {}; // date(YYYY-MM-DD) -> [taskData]
         const today = new Date().toLocaleDateString('zh-CN', {year:'numeric', month:'2-digit', day:'2-digit'}).replace(/\\//g, '-');
@@ -1434,31 +1399,7 @@ def render_config_page(
             html += '</div>'; // end task-group
         });
         
-        sortedDates.forEach(dateStr => {
-            const groupTasks = groups[dateStr];
-            // 组内按时间倒序
-            groupTasks.sort((a, b) => (b.data.task?.start_time || '').localeCompare(a.data.task?.start_time || ''));
-            
-            const isToday = dateStr === today;
-            const collapsedClass = isToday ? '' : 'collapsed'; // 今天默认展开，其他折叠
-            
-            html += '<div class="task-group">';
-            
-            // Group Header
-            html += `<div class="group-header ${collapsedClass}" id="group_header_${dateStr}" onclick="toggleGroup('${dateStr}')">`;
-            html += `<span class="group-title"><span class="arrow">▼</span> ${dateStr === today ? '📅 今天' : '📅 ' + dateStr}</span>`;
-            html += `<span class="group-count">${groupTasks.length}</span>`;
-            html += `</div>`;
-            
-            // Group Content
-            html += `<div class="group-content ${collapsedClass}" id="group_content_${dateStr}">`;
-            groupTasks.forEach(item => {
-                html += renderTaskCard(item.id, item.data);
-            });
-            html += `</div>`; // end group-content
-            
-            html += '</div>'; // end task-group
-        });
+
         
         taskList.innerHTML = html;
     }
@@ -1506,34 +1447,7 @@ def render_config_page(
                 if (result.full_analysis) {
                     markdown = result.full_analysis;
                 }
-            // 如果是详情模式，生成详细报告
-            if (window.isDetailMode) {
-                 markdown += generateDetailMarkdown(result, code);
-            } else {
-                // 标准模式
-                if (result.operation_advice) {
-                    markdown += '## 操作建议\\n';
-                    markdown += '**' + result.operation_advice + '**';
-                    if (result.sentiment_score) {
-                        markdown += ' (评分: ' + result.sentiment_score + ')\\n\\n';
-                    } else {
-                        markdown += '\\n\\n';
-                    }
-                }
-                
-                if (result.trend_prediction) {
-                    markdown += '## 趋势预测\\n';
-                    markdown += result.trend_prediction + '\\n\\n';
-                }
-                
-                if (result.analysis_summary) {
-                    markdown += '## 分析摘要\\n';
-                    markdown += result.analysis_summary + '\\n\\n';
-                }
-                
-                if (result.full_analysis) {
-                    markdown = result.full_analysis;
-                }
+
             }
         } else if (task.status === 'running') {
             markdown = '# ' + code.toUpperCase() + '\\n\\n';
@@ -1560,10 +1474,6 @@ def render_config_page(
         
         // 保存当前查看的任务ID
         window.currentTaskId = taskId;
-        const detailBtn = document.getElementById('btn_detail_toggle');
-        
-        // 保存当前查看的任务ID
-        window.currentTaskId = taskId;
         
         panel.classList.add('has-content');
         placeholder.style.display = 'none';
@@ -1571,22 +1481,6 @@ def render_config_page(
         content.style.flexDirection = 'column';
         content.style.flex = '1';
         
-        // 更新按钮状态
-        if (detailBtn) {
-            if (task.status === 'completed' && result.name) {
-                detailBtn.style.display = 'block';
-                detailBtn.textContent = window.isDetailMode ? '返回摘要' : '查看详情';
-                if (window.isDetailMode) {
-                    detailBtn.classList.add('active');
-                } else {
-                    detailBtn.classList.remove('active');
-                }
-            } else {
-                detailBtn.style.display = 'none';
-            }
-        }
-        
-        // 更新按钮状态
         if (detailBtn) {
             if (task.status === 'completed' && result.name) {
                 detailBtn.style.display = 'block';
@@ -1609,87 +1503,6 @@ def render_config_page(
             markdownDiv.innerHTML = '<pre style="white-space: pre-wrap;">' + markdown.replace(/\\\\n/g, '\\n') + '</pre>';
         }
     };
-    
-    // 切换详情模式
-    window.toggleDetailMode = function() {
-        window.isDetailMode = !window.isDetailMode;
-        if (window.currentTaskId) {
-            window.showResult(window.currentTaskId);
-        }
-    };
-    
-    // 生成详细 Markdown (仿照 Python generate_dashboard_report)
-    function generateDetailMarkdown(result, code) {
-        let lines = [];
-        const dashboard = result.dashboard || {};
-        const core = dashboard.core_conclusion || {};
-        const intel = dashboard.intelligence || {};
-        const battle = dashboard.battle_plan || {};
-        const data_persp = dashboard.data_perspective || {};
-        
-        // 核心结论
-        if (dashboard) {
-            const one_sentence = core.one_sentence || result.analysis_summary;
-            const time_sense = core.time_sensitivity || '本周内';
-            
-            lines.push(`### 📌 核心结论\\n`);
-            lines.push(`**${result.operation_advice}** | ${result.trend_prediction}\\n`);
-            lines.push(`> **一句话决策**: ${one_sentence}\\n`);
-            lines.push(`⏰ **时效性**: ${time_sense}\\n`);
-        }
-        
-        // 重要信息
-        if (intel) {
-             lines.push(`### 📰 重要信息\\n`);
-             
-             if (intel.earnings_outlook) {
-                 lines.push(`**📊 业绩预期**: ${intel.earnings_outlook}\\n`);
-             }
-             if (intel.sentiment_summary) {
-                 lines.push(`**💭 舆情情绪**: ${intel.sentiment_summary}\\n`);
-             }
-             
-             if (intel.risk_alerts && intel.risk_alerts.length > 0) {
-                 lines.push(`\\n**🚨 风险警报**:`);
-                 intel.risk_alerts.forEach(alert => lines.push(`- ${alert}`));
-                 lines.push(``);
-             }
-             
-             if (intel.positive_catalysts && intel.positive_catalysts.length > 0) {
-                 lines.push(`\\n**✨ 利好催化**:`);
-                 intel.positive_catalysts.forEach(cat => lines.push(`- ${cat}`));
-                 lines.push(``);
-             }
-        }
-        
-        // 操盘点位 (Battle Plan)
-        if (battle) {
-             lines.push(`### 🎯 操作点位\\n`);
-             
-             const sniper = battle.sniper_points || {};
-             if (sniper) {
-                 lines.push(`| 买点 | 止损 | 目标 |`);
-                 lines.push(`|---|---|---|`);
-                 lines.push(`| ${sniper.ideal_buy || '-'} | ${sniper.stop_loss || '-'} | ${sniper.take_profit || '-'} |\\n`);
-             }
-             
-             const pos = battle.position_strategy || {};
-             if (pos) {
-                 lines.push(`**持仓建议**: ${pos.suggested_position || '-'}`);
-                 if (pos.entry_plan) lines.push(`- 建仓: ${pos.entry_plan}`);
-                 if (pos.risk_control) lines.push(`- 风控: ${pos.risk_control}`);
-                 lines.push(``);
-             }
-        }
-        
-        // 如果没有 Dashboard 数据，显示一些基础信息
-        if (!dashboard || Object.keys(dashboard).length === 0) {
-            lines.push(`*(暂无详细数据，显示基础分析)*\\n`);
-            if (result.analysis_summary) lines.push(result.analysis_summary);
-        }
-        
-        return lines.join('\\n');
-    }
     
     // 切换详情模式
     window.toggleDetailMode = function() {
