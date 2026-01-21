@@ -277,6 +277,25 @@ def create_default_router() -> Router:
         lambda q: api_handler.handle_task_status(q),
         "查询任务状态"
     )
+
+    router.register(
+        "/task/delete", "POST",
+        lambda f: api_handler.handle_delete_task(f),
+        "删除任务"
+    )
+    
+    # === 大盘复盘路由 ===
+    router.register(
+        "/api/market/review", "GET",
+        lambda q: api_handler.handle_market_review(q),
+        "获取大盘复盘"
+    )
+    
+    router.register(
+        "/api/market/reviews", "GET",
+        lambda q: api_handler.handle_market_reviews(q),
+        "获取复盘历史"
+    )
     
     return router
 

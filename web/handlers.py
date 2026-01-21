@@ -23,7 +23,7 @@ from http import HTTPStatus
 from datetime import datetime
 from typing import Dict, Any, TYPE_CHECKING
 
-from web.services import get_config_service, get_analysis_service
+from web.services import get_config_service, get_analysis_service, get_market_service
 from web.templates import render_config_page
 
 if TYPE_CHECKING:
@@ -239,6 +239,85 @@ class ApiHandler:
             )
         
         return JsonResponse({"success": True, "task": task})
+
+    def handle_delete_task(self, form_data: Dict[str, list]) -> Response:
+        """
+        删除任务 POST /task/delete
+        
+        Args:
+            form_data: 表单数据 (task_id)
+        """
+        task_id_list = form_data.get("task_id", [])
+        if not task_id_list or not task_id_list[0].strip():
+            return JsonResponse(
+                {"success": False, "error": "缺少必填参数: task_id"},
+                status=HTTPStatus.BAD_REQUEST
+            )
+            
+        task_id = task_id_list[0].strip()
+        success = self.analysis_service.delete_task(task_id)
+        
+        if success:
+            return JsonResponse({"success": True, "message": "任务已删除"})
+        else:
+            return JsonResponse(
+                {"success": False, "error": "删除失败，任务可能不存在"},
+                status=HTTPStatus.NOT_FOUND
+            )
+    
+    def handle_market_review(self, query: Dict[str, list]) -> Response:
+        """
+        获取大盘复盘 GET /api/market/review
+        
+        Args:
+            query: URL 查询参数 (可选 refresh=1 强制刷新)
+            
+        返回:
+            {
+                "success": true,
+                "data": { "date": "...", "report": "...", ... }
+            }
+        """
+        market_service = get_market_service()
+        
+        # 检查是否需要强制刷新
+        refresh_list = query.get("refresh", ["0"])
+        force_refresh = refresh_list[0] == "1"
+        
+        try:
+            review = market_service.get_today_review(force_refresh=force_refresh)
+            
+            if "error" in review:
+                return JsonResponse(
+                    {"success": False, "error": review["error"]},
+                    status=HTTPStatus.INTERNAL_SERVER_ERROR
+                )
+            
+            return JsonResponse({"success": True, "data": review})
+        except Exception as e:
+            logger.error(f"[ApiHandler] 获取大盘复盘失败: {e}")
+            return JsonResponse(
+                {"success": False, "error": str(e)},
+                status=HTTPStatus.INTERNAL_SERVER_ERROR
+            )
+    
+    def handle_market_reviews(self, query: Dict[str, list]) -> Response:
+        """
+        获取复盘历史列表 GET /api/market/reviews
+        
+        Args:
+            query: URL 查询参数 (可选 limit)
+        """
+        market_service = get_market_service()
+        
+        limit_list = query.get("limit", ["7"])
+        try:
+            limit = int(limit_list[0])
+        except ValueError:
+            limit = 7
+        
+        reviews = market_service.list_reviews(limit=limit)
+        return JsonResponse({"success": True, "reviews": reviews})
 
 
 # ============================================================
